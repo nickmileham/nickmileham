@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nicholas Mileham — Aerospace, Energy, Film</title>
+<meta name="description" content="Nicholas Mileham — aerospace manufacturing, private ventures, sustainable aviation fuel, and screenwriting. Wichita, Kansas.">
+<meta property="og:title" content="Nicholas Mileham">
+<meta property="og:description" content="Aircraft, fuel, and film. Work that rewards patience.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2307090D'/%3E%3Ccircle cx='16' cy='16' r='5' fill='none' stroke='%23C9A55C' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%23C9A55C'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void:      #07090D;
+    --void-2:    #0A0D13;
+    --panel:     #0D1119;
+    --panel-2:   #101521;
+    --bone:      #E9E7DE;
+    --bone-dim:  #B9BCB9;
+    --steel:     #8B94A0;
+    --steel-dim: #5C6570;
+    --brass:     #C9A55C;
+    --brass-hi:  #E2C284;
+    --brass-dim: rgba(201,165,92,0.32);
+    --hairline:  rgba(233,231,222,0.09);
+    --hairline-2:rgba(233,231,222,0.05);
+    --glass:     rgba(7,9,13,0.72);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; font-size: 17px; }
+
+  body {
+    font-family: 'Instrument Sans', system-ui, sans-serif;
+    background: var(--void);
+    color: var(--bone);
+    line-height: 1.75;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--brass); color: var(--void); }
+
+  a:focus-visible, button:focus-visible {
+    outline: 1.5px solid var(--brass); outline-offset: 4px; border-radius: 2px;
+  }
+
+  /* ── GRAIN ── */
+  .grain {
+    position: fixed; inset: -50%; z-index: 300; pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: grain 9s steps(6) infinite;
+  }
+  @keyframes grain {
+    0%,100% { transform: translate(0,0); }
+    20% { transform: translate(-3%,2%); }
+    40% { transform: translate(2%,-3%); }
+    60% { transform: translate(-2%,-2%); }
+    80% { transform: translate(3%,3%); }
+  }
+
+  /* ── CURSOR ── */
+  .cursor-dot, .cursor-ring {
+    position: fixed; top: 0; left: 0; z-index: 400; pointer-events: none;
+    border-radius: 50%; transform: translate(-50%,-50%);
+    display: none;
+  }
+  .cursor-dot { width: 5px; height: 5px; background: var(--brass); }
+  .cursor-ring {
+    width: 34px; height: 34px;
+    border: 1px solid var(--brass-dim);
+    transition: width 0.28s ease, height 0.28s ease, border-color 0.28s ease;
+  }
+  .cursor-ring.hot { width: 56px; height: 56px; border-color: var(--brass); }
+  @media (pointer: fine) {
+    .cursor-dot, .cursor-ring { display: block; }
+  }
+
+  /* ── PROGRESS ── */
+  #progress {
+    position: fixed; top: 0; left: 0; height: 1.5px; width: 0;
+    background: linear-gradient(90deg, var(--brass), var(--brass-hi));
+    z-index: 210;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 56px; height: 76px;
+    background: var(--glass);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    color: var(--bone); text-decoration: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  .nav-logo .reticle {
+    width: 14px; height: 14px; border: 1px solid var(--brass);
+    border-radius: 50%; position: relative; flex: none;
+  }
+  .nav-logo .reticle::after {
+    content: ''; position: absolute; inset: 4px;
+    background: var(--brass); border-radius: 50%;
+  }
+  .nav-right { display: flex; align-items: center; gap: 40px; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    position: relative;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--steel); text-decoration: none;
+    padding: 4px 0; transition: color 0.25s;
+  }
+  .nav-links a .idx { color: var(--brass-dim); margin-right: 6px; transition: color 0.25s; }
+  .nav-links a:hover, .nav-links a:focus-visible,
+  .nav-links a.active { color: var(--bone); }
+  .nav-links a.active .idx, .nav-links a:hover .idx { color: var(--brass); }
+
+  .clock {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.08em;
+    color: var(--steel);
+    font-variant-numeric: tabular-nums;
+    display: flex; align-items: center; gap: 9px;
+  }
+  .clock::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--brass);
+    animation: pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+  /* ── HAMBURGER / MOBILE MENU ── */
+  .hamburger {
+    display: none; flex-direction: column; gap: 6px;
+    cursor: pointer; padding: 6px; background: none; border: none;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 1px; background: var(--bone-dim);
+    transition: transform 0.25s, opacity 0.25s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none; position: fixed; top: 66px; left: 0; right: 0;
+    background: var(--void-2); border-bottom: 1px solid var(--hairline);
+    z-index: 199; flex-direction: column; padding: 6px 0;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--steel); text-decoration: none;
+    padding: 17px 24px; border-bottom: 1px solid var(--hairline-2);
+  }
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu a:hover { color: var(--brass); }
+
+  /* ── SECTION RAIL ── */
+  .rail {
+    position: fixed; left: 22px; top: 50%; transform: translateY(-50%);
+    z-index: 150; display: flex; flex-direction: column; gap: 22px;
+  }
+  .rail a {
+    display: block; width: 16px; height: 1px;
+    background: var(--steel-dim);
+    transition: background 0.3s, width 0.3s;
+  }
+  .rail a.active { background: var(--brass); width: 26px; }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh; min-height: 100svh;
+    padding: 170px 56px 120px;
+    display: flex; flex-direction: column; justify-content: center;
+    overflow: hidden;
+    background:
+      radial-gradient(120% 90% at 70% 110%, rgba(201,165,92,0.06), transparent 55%),
+      var(--void);
+  }
+  #terrain {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(90% 70% at 50% 45%, transparent 40%, rgba(7,9,13,0.55) 100%);
+  }
+  .hero-inner { position: relative; z-index: 2; max-width: 980px; }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--brass); margin-bottom: 34px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .eyebrow::before {
+    content: ''; width: 40px; height: 1px; background: var(--brass-dim);
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 7.4vw, 6.4rem);
+    font-weight: 300; line-height: 1.04; color: var(--bone);
+    letter-spacing: -0.01em; margin-bottom: 42px;
+    text-wrap: balance;
+  }
+  .hero-title em {
+    font-style: italic; font-weight: 300; color: var(--brass-hi);
+  }
+  .line { display: block; overflow: hidden; }
+  .line-inner {
+    display: block;
+    transform: translateY(112%);
+    animation: lineUp 1.1s cubic-bezier(0.19,1,0.22,1) forwards;
+  }
+  .line:nth-child(1) .line-inner { animation-delay: 0.15s; }
+  .line:nth-child(2) .line-inner { animation-delay: 0.28s; }
+  @keyframes lineUp { to { transform: translateY(0); } }
+
+  .hero-sub {
+    font-size: 1.12rem; line-height: 1.8; color: var(--steel);
+    max-width: 56ch;
+  }
+  .hero-sub strong { color: var(--bone-dim); font-weight: 500; }
+
+  .hero-hud {
+    position: absolute; left: 56px; right: 56px; bottom: 40px; z-index: 2;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.66rem; letter-spacing: 0.1em; color: var(--steel-dim);
+    font-variant-numeric: tabular-nums;
+  }
+  .hero-hud .scroll-cue {
+    display: flex; align-items: center; gap: 10px; color: var(--steel);
+  }
+  .scroll-cue .tick {
+    display: block; width: 1px; height: 34px; overflow: hidden;
+    background: var(--hairline); position: relative;
+  }
+  .scroll-cue .tick::after {
+    content: ''; position: absolute; left: 0; top: -50%;
+    width: 100%; height: 50%; background: var(--brass);
+    animation: fall 2.2s cubic-bezier(0.65,0,0.35,1) infinite;
+  }
+  @keyframes fall { to { top: 110%; } }
+
+  .fi { opacity: 0; animation: rise 1s cubic-bezier(0.22,0.61,0.36,1) forwards; }
+  @keyframes rise { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  .fi1 { animation-delay: 0.05s; } .fi2 { animation-delay: 0.55s; } .fi3 { animation-delay: 0.8s; }
+
+  /* ── MARQUEE ── */
+  .marquee {
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    background: var(--void-2);
+    overflow: hidden; white-space: nowrap;
+    padding: 15px 0;
+  }
+  .marquee-track {
+    display: inline-block;
+    animation: slide 36s linear infinite;
+  }
+  .marquee span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--steel-dim); padding: 0 14px;
+  }
+  .marquee span b { color: var(--brass-dim); font-weight: 400; padding-left: 28px; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+
+  /* ── SECTION SCAFFOLD ── */
+  .band { padding: 130px 56px; position: relative; }
+  .band + .band { border-top: 1px solid var(--hairline); }
+  .band-inner {
+    width: 100%; max-width: 1160px; margin: 0 auto;
+    display: grid; grid-template-columns: 210px 1fr; gap: 90px;
+  }
+  .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--steel); padding-top: 14px;
+    position: sticky; top: 110px; align-self: start;
+  }
+  .label .idx { color: var(--brass); display: block; margin-bottom: 8px; }
+
+  /* ── ABOUT ── */
+  .about { background: var(--void); }
+  .about-lead {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.7rem, 2.8vw, 2.4rem); font-weight: 300; line-height: 1.35;
+    color: var(--bone); max-width: 30ch; margin-bottom: 44px;
+    text-wrap: balance;
+  }
+  .about-lead em { font-style: italic; color: var(--brass-hi); }
+  .about p:not(.about-lead) {
+    font-size: 1.06rem; line-height: 1.9;
+    color: var(--steel); max-width: 62ch;
+  }
+  .about p + p { margin-top: 24px; }
+  .about strong { color: var(--bone-dim); font-weight: 500; }
+
+  .facts {
+    margin-top: 60px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: var(--hairline);
+    border: 1px solid var(--hairline);
+  }
+  .fact {
+    background: var(--void-2); padding: 26px 28px;
+  }
+  .fact-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem; font-weight: 500; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--steel-dim); margin-bottom: 10px;
+  }
+  .fact-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem; font-weight: 400; color: var(--bone);
+  }
+
+  /* ── WORK ── */
+  .work { background: var(--void); }
+  .work-items { display: flex; flex-direction: column; gap: 24px; }
+  .card {
+    position: relative;
+    background: var(--panel);
+    border: 1px solid var(--hairline);
+    padding: 44px 48px;
+    overflow: hidden;
+    transition: border-color 0.35s ease, transform 0.35s ease;
+  }
+  .card::before {
+    content: '';
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%),
+                rgba(201,165,92,0.09), transparent 65%);
+    opacity: 0; transition: opacity 0.4s ease;
+  }
+  .card:hover { border-color: rgba(201,165,92,0.35); transform: translateY(-2px); }
+  .card:hover::before { opacity: 1; }
+  .card-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 20px; margin-bottom: 18px;
+  }
+  .card-kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.66rem; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--brass);
+  }
+  .card-no {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.66rem; letter-spacing: 0.14em; color: var(--steel-dim);
+  }
+  .card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.6rem, 2.4vw, 2.1rem); font-weight: 400; line-height: 1.2;
+    color: var(--bone); margin-bottom: 18px;
+  }
+  .card p {
+    font-size: 1.03rem; line-height: 1.85; color: var(--steel); max-width: 64ch;
+  }
+  .card p + p { margin-top: 16px; }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+  .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--steel); border: 1px solid var(--hairline);
+    padding: 6px 13px; border-radius: 999px;
+  }
+
+  /* ── CONTACT ── */
+  .contact {
+    background:
+      radial-gradient(80% 100% at 50% 120%, rgba(201,165,92,0.07), transparent 60%),
+      var(--void-2);
+  }
+  .contact-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3.4vw, 2.8rem); font-weight: 300; line-height: 1.35;
+    color: var(--bone); max-width: 26ch; margin-bottom: 46px;
+    text-wrap: balance;
+  }
+  .contact-body em { font-style: italic; color: var(--brass-hi); }
+  .email-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .contact-email {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.95rem; letter-spacing: 0.04em;
+    color: var(--bone); text-decoration: none;
+    border-bottom: 1px solid var(--brass-dim); padding-bottom: 5px;
+    transition: color 0.25s, border-color 0.25s;
+  }
+  .contact-email:hover, .contact-email:focus-visible {
+    color: var(--brass-hi); border-color: var(--brass);
+  }
+  .copy-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--steel); background: none;
+    border: 1px solid var(--hairline); border-radius: 999px;
+    padding: 9px 20px; cursor: pointer;
+    transition: color 0.25s, border-color 0.25s;
+  }
+  .copy-btn:hover, .copy-btn:focus-visible,
+  .copy-btn.copied { color: var(--brass); border-color: var(--brass); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--void); padding: 36px 56px;
+    border-top: 1px solid var(--hairline);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.66rem; letter-spacing: 0.1em;
+    color: var(--steel-dim);
+  }
+  footer .sig { color: var(--steel); }
+  footer .sig b { color: var(--brass-dim); font-weight: 400; }
+
+  /* ── MOTION / REVEAL ── */
+  .reveal {
+    opacity: 0; transform: translateY(22px);
+    transition: opacity 0.85s cubic-bezier(0.22,0.61,0.36,1),
+                transform 0.85s cubic-bezier(0.22,0.61,0.36,1);
+    transition-delay: calc(var(--i, 0) * 100ms);
+  }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fi, .reveal, .line-inner { animation: none; transition: none; opacity: 1; transform: none; }
+    .card, .card:hover { transition: none; transform: none; }
+    .clock::before, .scroll-cue .tick::after { animation: none; }
+    .marquee-track { animation: none; }
+    .grain { animation: none; }
+    #terrain { display: none; }
+    .cursor-dot, .cursor-ring { display: none !important; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* ── TABLET ── */
+  @media (max-width: 1180px) { .rail { display: none; } }
+  @media (max-width: 1024px) and (min-width: 769px) {
+    nav, .hero, .band, footer { padding-left: 36px; padding-right: 36px; }
+    .hero-hud { left: 36px; right: 36px; }
+    .band-inner { grid-template-columns: 160px 1fr; gap: 52px; }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    html { font-size: 16.5px; }
+    nav { padding: 0 22px; height: 66px; }
+    .nav-links, .clock { display: none; }
+    .hamburger { display: flex; }
+
+    .hero { padding: 130px 22px 90px; }
+    .hero-title { font-size: 2.9rem; margin-bottom: 30px; }
+    .hero-sub { font-size: 1.03rem; }
+    .hero-hud { left: 22px; right: 22px; bottom: 26px; }
+    .hero-hud .coords { display: none; }
+
+    .band { padding: 84px 22px; }
+    .band-inner { grid-template-columns: 1fr; gap: 30px; }
+    .label { position: static; padding-top: 0; }
+    .label .idx { display: inline; margin-right: 10px; }
+
+    .about-lead { font-size: 1.5rem; max-width: none; }
+    .facts { grid-template-columns: 1fr; margin-top: 44px; }
+
+    .card { padding: 30px 24px; }
+    .card p { font-size: 1rem; }
+
+    .contact-body { font-size: 1.6rem; max-width: none; }
+    .contact-email { word-break: break-all; }
+
+    footer { flex-direction: column; gap: 10px; text-align: center; padding: 28px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+<div id="progress" aria-hidden="true"></div>
+
+<nav>
+  <a class="nav-logo" href="#top" data-hover>
+    <span class="reticle" aria-hidden="true"></span>
+    N.&nbsp;Mileham
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about" data-spy data-hover><span class="idx">01</span>About</a></li>
+      <li><a href="#work" data-spy data-hover><span class="idx">02</span>Work</a></li>
+      <li><a href="#contact" data-spy data-hover><span class="idx">03</span>Contact</a></li>
+    </ul>
+    <div class="clock" id="clock" title="Local time in Wichita">WICHITA —:—</div>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMenu()">01 — About</a>
+  <a href="#work" onclick="closeMenu()">02 — Work</a>
+  <a href="#contact" onclick="closeMenu()">03 — Contact</a>
+</div>
+
+<div class="rail" aria-hidden="true">
+  <a href="#about" data-rail></a>
+  <a href="#work" data-rail></a>
+  <a href="#contact" data-rail></a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <canvas id="terrain" aria-hidden="true"></canvas>
+  <div class="hero-inner">
+    <div class="eyebrow fi fi1">Wichita, Kansas · 37.68°N 97.33°W</div>
+    <h1 class="hero-title">
+      <span class="line"><span class="line-inner">Aircraft, fuel, and film.</span></span>
+      <span class="line"><span class="line-inner">Work that rewards <em>patience</em>.</span></span>
+    </h1>
+    <p class="hero-sub fi fi2">
+      I work in <strong>aerospace manufacturing</strong>, run a private holding company, and spend the hours around both on sustainable aviation fuel and screenwriting. The through-line is the same: long-horizon problems that most people find too slow or too strange to start on.
+    </p>
+  </div>
+  <div class="hero-hud fi fi3">
+    <div class="scroll-cue"><span class="tick" aria-hidden="true"></span>Scroll</div>
+    <div class="coords">ALT 1,299 FT · HDG 360 · <span id="scrollReadout">SCR 000%</span></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack">
+    <span>Aerospace Manufacturing<b>·</b></span><span>Sustainable Aviation Fuel<b>·</b></span><span>Private Holdings<b>·</b></span><span>Federal Contracting<b>·</b></span><span>Screenwriting<b>·</b></span><span>Power-to-Liquid<b>·</b></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="band about" id="about">
+  <div class="band-inner">
+    <div class="label reveal"><span class="idx">01</span>About</div>
+    <div>
+      <p class="about-lead reveal">I'm interested in industries that take a decade to move, and the stories people tell about the ones who <em>try to move them</em>.</p>
+      <p class="reveal" style="--i:1">I work in <strong>aerospace manufacturing in Wichita</strong>, where the industry has been building airplanes for a century. It's where I learned how large industrial programs actually run — schedule, tooling, quality, and the distance between a design and a delivered part. Alongside that I run a <strong>private holding company</strong> through which I pursue real estate, federal contracting, and early-stage industrial concepts.</p>
+      <p class="reveal" style="--i:2">Most of what I do outside of work I taught myself — reading into technical fields until I could argue with people who do them professionally, running the numbers on deals, and building the thing rather than talking about it. That's taken me from carbon capture chemistry to acquisition financing to feature-length screenwriting, usually in the same week.</p>
+      <div class="facts reveal" style="--i:3">
+        <div class="fact">
+          <div class="fact-label">Based</div>
+          <div class="fact-value">Wichita, Kansas</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Industry</div>
+          <div class="fact-value">Aerospace &amp; Defense</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Horizon</div>
+          <div class="fact-value">Decades, not quarters</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="band work" id="work">
+  <div class="band-inner">
+    <div class="label reveal"><span class="idx">02</span>What I'm working on</div>
+    <div class="work-items">
+
+      <article class="card reveal" data-hover>
+        <div class="card-head">
+          <div class="card-kicker">Company</div>
+          <div class="card-no">FILE A</div>
+        </div>
+        <div class="card-name">[Company Name]</div>
+        <p>A private holding company. Interests span commercial real estate, federal contracting, and defense technology licensing. I look for assets where hands-on involvement changes the outcome, and I hold rather than flip.</p>
+        <div class="card-tags">
+          <span class="tag">Real Estate</span>
+          <span class="tag">Federal Contracting</span>
+          <span class="tag">Defense Tech</span>
+        </div>
+      </article>
+
+      <article class="card reveal" style="--i:1" data-hover>
+        <div class="card-head">
+          <div class="card-kicker">Energy</div>
+          <div class="card-no">FILE B</div>
+        </div>
+        <div class="card-name">Sustainable Aviation Fuel</div>
+        <p>I've spent considerable time on the Power-to-Liquid pathway — direct air capture CO₂ paired with green hydrogen and Fischer-Tropsch synthesis to produce drop-in jet fuel. My work has centered on the U.S. Gulf Coast, where captured CO₂, cheap renewable power, existing pipeline infrastructure, and airline demand overlap in a way they do almost nowhere else.</p>
+        <p>I'm interested in the project development side specifically: assembling the feedstock, technology, and offtake agreements that turn a plausible pathway into a financeable project. If you work in DAC, catalysis, electrolysis, or airline fuel procurement, I'd like to hear from you.</p>
+        <div class="card-tags">
+          <span class="tag">Power-to-Liquid</span>
+          <span class="tag">Direct Air Capture</span>
+          <span class="tag">Fischer-Tropsch</span>
+          <span class="tag">Gulf Coast</span>
+        </div>
+      </article>
+
+      <article class="card reveal" style="--i:2" data-hover>
+        <div class="card-head">
+          <div class="card-kicker">Writing</div>
+          <div class="card-no">FILE C</div>
+        </div>
+        <div class="card-name">Screenwriting</div>
+        <p>I write feature screenplays — crime and heist stories, drawn to the ones where nobody's motives fully resolve. A first feature is in development.</p>
+        <div class="card-tags">
+          <span class="tag">Features</span>
+          <span class="tag">Crime &amp; Heist</span>
+          <span class="tag">In Development</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="band contact" id="contact">
+  <div class="band-inner">
+    <div class="label reveal"><span class="idx">03</span>Contact</div>
+    <div>
+      <p class="contact-body reveal">Always open to a conversation — a venture, a project, a screenplay, or a problem <em>worth thinking about</em>.</p>
+      <div class="email-row reveal" style="--i:1">
+        <a href="mailto:nick@nicholasmileham.com" class="contact-email" data-hover>nick@nicholasmileham.com</a>
+        <button class="copy-btn" id="copyBtn" aria-label="Copy email address" data-hover>Copy</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="sig">Nicholas Mileham <b>·</b> Aerospace, Energy, Film</div>
+  <span>© 2026 · 37.68°N 97.33°W · EST. WICHITA</span>
+</footer>
+
+<script>
+(() => {
+  'use strict';
+
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── Mobile menu ── */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    const open = hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', open);
+  });
+  window.closeMenu = () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+  };
+
+  /* ── Live Wichita clock ── */
+  const clock = document.getElementById('clock');
+  const fmt = new Intl.DateTimeFormat('en-US', {
+    hour: '2-digit', minute: '2-digit', hour12: false,
+    timeZone: 'America/Chicago', timeZoneName: 'short'
+  });
+  const tick = () => { clock.textContent = 'WICHITA ' + fmt.format(new Date()); };
+  tick();
+  setInterval(tick, 30000);
+
+  /* ── Scroll progress + HUD readout ── */
+  const progress = document.getElementById('progress');
+  const readout = document.getElementById('scrollReadout');
+  let raf = null;
+  window.addEventListener('scroll', () => {
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      const pct = max > 0 ? (scrollY / max) * 100 : 0;
+      progress.style.width = pct + '%';
+      if (readout) readout.textContent = 'SCR ' + String(Math.round(pct)).padStart(3, '0') + '%';
+      raf = null;
+    });
+  }, { passive: true });
+
+  /* ── Marquee: duplicate track for seamless loop ── */
+  const track = document.getElementById('marqueeTrack');
+  if (track) track.innerHTML += track.innerHTML;
+
+  /* ── Scroll reveals ── */
+  if (!reduced && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      }
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
+
+  /* ── Scrollspy: nav + rail ── */
+  const spyLinks = [...document.querySelectorAll('[data-spy]')];
+  const railLinks = [...document.querySelectorAll('[data-rail]')];
+  const sections = spyLinks.map(a => document.querySelector(a.getAttribute('href')));
+  if ('IntersectionObserver' in window) {
+    const spy = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        const id = '#' + e.target.id;
+        spyLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
+        railLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
+      }
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    sections.forEach(s => s && spy.observe(s));
+  }
+
+  /* ── Copy email ── */
+  const copyBtn = document.getElementById('copyBtn');
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText('nick@nicholasmileham.com');
+      copyBtn.textContent = 'Copied';
+      copyBtn.classList.add('copied');
+      setTimeout(() => {
+        copyBtn.textContent = 'Copy';
+        copyBtn.classList.remove('copied');
+      }, 1800);
+    } catch { /* clipboard unavailable — mailto link still works */ }
+  });
+
+  /* ── Card spotlight ── */
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+
+  /* ── Custom cursor (fine pointers only) ── */
+  if (matchMedia('(pointer: fine)').matches && !reduced) {
+    const dot = document.querySelector('.cursor-dot');
+    const ring = document.querySelector('.cursor-ring');
+    let mx = -100, my = -100, rx = -100, ry = -100;
+    addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; }, { passive: true });
+    const loop = () => {
+      rx += (mx - rx) * 0.16;
+      ry += (my - ry) * 0.16;
+      dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
+      ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+    document.querySelectorAll('a, button, [data-hover]').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hot'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hot'));
+    });
+  }
+
+  /* ── Hero terrain: perspective wireframe, an aeronautical chart in motion.
+        Pauses when the tab is hidden; disabled for reduced motion. ── */
+  const canvas = document.getElementById('terrain');
+  if (canvas && !reduced) {
+    const ctx = canvas.getContext('2d');
+    const DPR = Math.min(devicePixelRatio || 1, 2);
+    let w = 0, h = 0, t = 0, running = true;
+    let mouseX = 0, targetMouseX = 0;
+
+    const resize = () => {
+      const r = canvas.parentElement.getBoundingClientRect();
+      w = r.width; h = r.height;
+      canvas.width = w * DPR; canvas.height = h * DPR;
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    };
+    resize();
+    addEventListener('resize', resize, { passive: true });
+    addEventListener('mousemove', (e) => {
+      targetMouseX = (e.clientX / innerWidth - 0.5) * 40;
+    }, { passive: true });
+
+    const ROWS = 24, COLS = 72;
+    const height = (x, z, time) =>
+      Math.sin(x * 1.9 + time * 0.32) * 0.5 +
+      Math.sin(z * 1.2 - time * 0.21) * 0.7 +
+      Math.sin((x + z) * 0.8 + time * 0.13) * 0.4;
+
+    const draw = () => {
+      if (!running) return;
+      ctx.clearRect(0, 0, w, h);
+      mouseX += (targetMouseX - mouseX) * 0.04;
+      const horizon = h * 0.34;
+      const f = Math.min(w, 1400) * 0.9;
+
+      for (let r = 0; r < ROWS; r++) {
+        const z = 1.4 + (r / (ROWS - 1)) * 7.5;
+        const depth = 1 - r / (ROWS - 1);
+        const brassRow = r % 6 === 3;
+        ctx.beginPath();
+        for (let c = 0; c <= COLS; c++) {
+          const x = (c / COLS - 0.5) * 14;
+          const y = height(x, z, t) * (0.7 + depth * 0.5);
+          const sx = w / 2 + ((x + mouseX * 0.004 * z) / z) * f;
+          const sy = horizon + ((2.6 + y * 0.55) / z) * f * 0.62;
+          c === 0 ? ctx.moveTo(sx, sy) : ctx.lineTo(sx, sy);
+        }
+        const a = 0.05 + depth * 0.22;
+        ctx.strokeStyle = brassRow
+          ? `rgba(201,165,92,${a * 0.9})`
+          : `rgba(233,231,222,${a * 0.5})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+      t += 0.016;
+      requestAnimationFrame(draw);
+    };
+    requestAnimationFrame(draw);
+
+    document.addEventListener('visibilitychange', () => {
+      running = !document.hidden;
+      if (running) requestAnimationFrame(draw);
+    });
+  }
+})();
+</script>
+</body>
+</html>
